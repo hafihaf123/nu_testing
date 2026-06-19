@@ -1,4 +1,4 @@
-# **Testing Script API Reference**
+# Testing Script API Reference
 
 This document outlines the API for writing test scripts using the Nushell
 testing framework. The framework provides two distinct approaches to writing
@@ -13,7 +13,7 @@ executing a large matrix of inputs and expected outputs.
 Both APIs ultimately return a standardized Nushell table containing the test
 results, which can be further piped, saved to JSON, or visualized.
 
-## **1. The Suite API**
+## 1. The Suite API
 
 The Suite API uses Nushell's closures and pipelines to create isolated test
 scopes, manage setup/teardown state, and chain assertions.
@@ -129,7 +129,7 @@ def "assert valid-json" [] {
 }
 ```
 
-## **2. The Data-Table API**
+## 2. The Data-Table API
 
 The Data-Table API is designed for simple, bulk testing where you want to test
 dozens of inputs against expected outputs without writing boilerplate closures.
@@ -139,16 +139,16 @@ dozens of inputs against expected outputs without writing boilerplate closures.
 To use this API, define a standard Nushell table/list of records. Only the name
 column is strictly required; omitted columns fall back to sensible defaults.
 
-Column | Type | Default | Description
-:---- | :---- | :---- | :----
-`name` | `string` | **Required** | Identifier/description for the test case.
-`args` | `list<string>` | `[]` | Arguments to pass to the binary.
-`stdin` | `string` | `null` | Data to pipe into the command.
-`env` | `record` | `{}` | Row-specific environment variables. *Overrides global `--env`.*
-`code` | `int` | `0` | Expected exit code.
-`stdout` | `string` | `null` | Expected standard output.
-`stderr` | `string` | `null` | Expected standard error.
-`matcher` | `string` | `"exact"` | Comparison method (`"exact"`, `"contains"`, `"regex"`). *Overrides global `--matcher`.*
+| Column | Type | Default | Description |
+| :---- | :---- | :---- | :---- |
+| `name` | `string` | **Required** | Identifier/description for the test case. |
+| `args` | `list<string>` | `[]` | Arguments to pass to the binary. |
+| `stdin` | `string` | `null` | Data to pipe into the command. |
+| `env` | `record` | `{}` | Row-specific environment variables. *Overrides global `--env`.* |
+| `code` | `int` | `0` | Expected exit code. |
+| `stdout` | `string` | `null` | Expected standard output. |
+| `stderr` | `string` | `null` | Expected standard error. |
+| `matcher` | `string` | `"exact"` | Comparison method (`"exact"`, `"contains"`, `"regex"`). *Overrides global `--matcher`.* |
 
 ### `run-table`
 
@@ -185,28 +185,74 @@ let parser_tests = [
 $parser_tests | run-table "./target/debug/my-parser" --env { RUST_BACKTRACE: "1" }
 ```
 
-## **3. Execution & Outputs**
+## 4. The Output Schema (Data Structures)
 
-Whether you use the Suite API (`suite`) or the Data-Table API (`run-table`), the
-final execution returns a unified Nushell table detailing the run.
+When you run a test script using the Suite API (`suite`) or the Data-Table
+API (`run-table`), the framework returns a standard Nushell table (`list<record>`).
+Every row in this table represents a single test execution.
 
-**Output Schema:**
+This output is heavily structured so you can pipe it directly into custom visualizers,
+CI/CD exporters, or debugging tools without needing to parse text.
+
+> [!WARNING]
+> The raw output is not meant to be user-friendly and should be interacted with
+> mostly only through additional tooling in this repository.
+
+### Record Specification
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `metadata` | `record` | High-level tracking information about the test. |
+| `status` | `string` | The final outcome: `"PASS"`, `"FAIL"`, `"PANIC"`, `"TIMEOUT"`, or `"SKIP"`. |
+| `context` | `record` | Everything needed to perfectly reproduce the command execution. |
+| `output` | `record` | The raw, complete result of the binary execution. |
+| `assertions` | `list<record>`| A chronological list of the conditions checked during the test. |
+
+### Schema Example
 
 ```nu
-[
-    {
-        test_name: string,
-        status: string,       # "PASS" or "FAIL"
-        expected: any,        # What the assertion was looking for
-        actual: any,          # What the binary actually output
-        duration: duration    # How long the test took
-    }
-]
-```
+{
+    # 1. METADATA
+    metadata: {
+        name: "redundant crate prefix",
+        suite: "CRust Lints",            # null if running a standalone table
+        file: "tests/lint_tests.nu",     # The source file of the test
+        timestamp: 2026-06-20 12:30:00,  # Native Nushell datetime
+        duration: 145ms                  # Native Nushell duration
+    },
 
-Because the output is structured data, you can seamlessly pipe your test scripts
-into other Nushell commands for formatting or CI/CD artifacts:
+    # 2. STATUS
+    status: "FAIL",
 
-```nu
-nu my_tests.nu | where status == "FAIL" | to json | save failed_tests.json
-```
+    # 3. CONTEXT (Reproduction Data)
+    context: {
+        binary: "./target/debug/crust",
+        args: ["main.cr", "--lint"],
+        env: { RUST_BACKTRACE: "1" },
+        cwd: "/home/user/projects/crust/tests",
+        stdin: null                      # The exact string piped into the binary, if any
+    },
+
+    # 4. RAW OUTPUT (Execution Results)
+    output: {
+        exit_code: 0,
+        stdout: "",
+        stderr: "warning: unused variable\n"
+    },
+
+    # 5. ASSERTIONS (Pipeline History)
+    # Note: To prevent data bloat, assertions do not duplicate actual output.
+    # Downstream tools cross-reference the `matcher` with the `output` block above.
+    assertions: [
+        {
+            matcher: "code exact",
+            expected: "0",
+            passed: true
+        },
+        {
+            matcher: "stderr contains",
+            expected: "redundant crate::",
+            passed: false
+        }
+    ]
+}
