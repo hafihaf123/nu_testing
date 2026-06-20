@@ -16,21 +16,25 @@ results, which can be further piped, saved to JSON, or visualized.
 ## 1. The Suite API
 
 The Suite API uses Nushell's closures and pipelines to create isolated test
-scopes, manage setup/teardown state, and chain assertions.
+scopes, manage cascading setup/teardown state, and chain assertions.
 
 ### `suite`
 
 Groups a set of tests together, manages their execution context, and ensures
 lifecycle hooks (setup/teardown) are respected even if individual tests panic.
+The `suite` command supports both run-once-per-suite and run-per-test lifecycle
+hooks.
 
 **Signature:**
 
 ```nu
 def suite [
-    name: string         # The name of the test suite
-    --setup: closure     # Logic to run BEFORE any tests. Returns a state record.
-    --teardown: closure  # Logic to run AFTER all tests. Takes the state record as input.
-    tests: closure       # The block containing the actual `test` commands. Takes the state record as input.
+    name: string              # The name of the test suite
+    --setup: closure          # Logic to run ONCE BEFORE the suite. Returns a $suite_state record.
+    --teardown: closure       # Logic to run ONCE AFTER the suite. Takes the $suite_state.
+    --before-each: closure    # Logic to run BEFORE EVERY test. Takes $suite_state, returns $shared_test_state.
+    --after-each: closure     # Logic to run AFTER EVERY test. Takes $shared_test_state.
+    tests: closure            # The block containing the actual `test` commands. Takes the $suite_state.
 ]
 ```
 
@@ -38,27 +42,40 @@ def suite [
 
 ```nu
 suite "Database Integration" --setup {
+    # Runs once per suite
     mkdir test_db
     { db_path: "test_db", port: 5432 }
-} --teardown { |state|
-    rm -rf $state.db_path
-} { |state|
-    test "initializes correctly" {
-        # Tests go here, utilizing $state
+} --before-each { |suite_state|
+    # Runs automatically before every test
+    let temp_file = (mktemp)
+    { db_path: $suite_state.db_path, file: $temp_file }
+} --after-each { |shared_state|
+    # Cleans up automatically after every test
+    rm -f $shared_state.file
+} --teardown { |suite_state|
+    # Runs once at the end of the suite
+    rm -rf $suite_state.db_path
+} { |suite_state|
+    test "initializes correctly" { |shared_state|
+        # Tests go here, utilizing the state naturally
     }
 }
 ```
 
 ### `test`
 
-Defines the boundary of a single test case within a suite.
+Defines the boundary of a single test case within a suite. It supports additive,
+test-specific lifecycle hooks for edge cases where the suite's `--before-each` is
+not enough.
 
 **Signature:**
 
 ```nu
 def test [
     description: string   # What this specific test validates
-    logic: closure        # The pipeline of commands to execute
+    --setup: closure      # Logic to run BEFORE this specific test (runs after --before-each). Takes $shared_test_state, returns $local_test_state.
+    --teardown: closure   # Logic to run AFTER this specific test (runs before --after-each). Takes $local_test_state.
+    logic: closure        # The pipeline of commands to execute. Takes $local_test_state (or $shared_test_state if no local setup).
 ]
 ```
 
@@ -144,7 +161,7 @@ column is strictly required; omitted columns fall back to sensible defaults.
 | `name` | `string` | **Required** | Identifier/description for the test case. |
 | `args` | `list<string>` | `[]` | Arguments to pass to the binary. |
 | `stdin` | `string` | `null` | Data to pipe into the command. |
-| `env` | `record` | `{}` | Row-specific environment variables. *Overrides global `--env`.* |
+| `env` | `record` | `{}` | Test-specific environment variables. *Overrides global `--env`.* |
 | `code` | `int` | `0` | Expected exit code. |
 | `stdout` | `string` | `null` | Expected standard output. |
 | `stderr` | `string` | `null` | Expected standard error. |
@@ -153,19 +170,22 @@ column is strictly required; omitted columns fall back to sensible defaults.
 ### `run-table`
 
 Accepts your formatted table from the pipeline, executes each row against the
-binary, and aggregates the results.
+binary, and aggregates the results. It supports both suite-level and test-level
+lifecycle hooks.
 
 **Signature:**
 
 ```nu
 def run-table [
-    binary: string        # Path to the executable being tested
-    --cwd: string         # Working directory for the execution
-    --env: record         # Global environment variables applied to all rows
-    --matcher: string     # Global matching strategy (default: "exact")
-    --setup: closure      # Runs before table execution. Returns a state record.
-    --teardown: closure   # Runs after table execution. Takes the state record as input.
-    --timeout: duration   # Maximum execution time per row (default: 10sec)
+    binary: string            # Path to the executable being tested
+    --cwd: string             # Working directory for the execution
+    --env: record             # Global environment variables applied to all tests
+    --matcher: string         # Global matching strategy (default: "exact")
+    --suite-setup: closure    # Runs ONCE before table execution. Returns a $suite_state record.
+    --suite-teardown: closure # Runs ONCE after table execution. Takes $suite_state.
+    --test-setup: closure      # Runs before EACH test. Takes the test record, returns $test_state.
+    --test-teardown: closure   # Runs after EACH test. Takes $test_state.
+    --timeout: duration       # Maximum execution time per test (default: 10sec)
 ]
 ```
 
@@ -179,10 +199,16 @@ let parser_tests = [
     [ "experimental mode"  "int x = 5;"  ["-e"]  0     "warning: exp"  "contains" ]
 ]
 
-# Run the table, applying a global environment variable to all tests.
-# If a specific row provided an `env` column, it would merge/override the global env.
+# Run the table, applying a global environment variable to all tests, 
+# and generating a temporary file for each test.
 
-$parser_tests | run-table "./target/debug/my-parser" --env { RUST_BACKTRACE: "1" }
+$parser_tests | run-table "./target/debug/my-parser" --env { RUST_BACKTRACE: "1" } --test-setup { |test|
+    let temp_file = $"test_($test.name | str replace ' ' '_').cr"
+    touch $temp_file
+    { file: $temp_file }
+} --test-teardown { |test_state|
+    rm $test_state.file
+}
 ```
 
 ## 4. The Output Schema (Data Structures)
@@ -203,7 +229,7 @@ CI/CD exporters, or debugging tools without needing to parse text.
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `metadata` | `record` | High-level tracking information about the test. |
-| `status` | `string` | The final outcome: `"PASS"`, `"FAIL"`, `"PANIC"`, `"TIMEOUT"`, or `"SKIP"`. |
+| `status` | `string` | The final outcome: `"PASS"`, `"FAIL"`, `"SETUP_PANIC"`, `"TEARDOWN_PANIC"`, `"PANIC"`, or `"SKIP"`. |
 | `context` | `record` | Everything needed to perfectly reproduce the command execution. |
 | `output` | `record` | The raw, complete result of the binary execution. |
 | `assertions` | `list<record>`| A chronological list of the conditions checked during the test. |
@@ -256,3 +282,4 @@ CI/CD exporters, or debugging tools without needing to parse text.
         }
     ]
 }
+```
