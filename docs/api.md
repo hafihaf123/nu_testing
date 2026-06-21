@@ -30,7 +30,7 @@ an internal Nushell record.
 def run-cmd [
     binary: string        # Path to the executable
     args?: list<string>   # Optional positional arguments (default: [])
-    --env: record         # Environment variables to pass (default: {})
+    --env-vars: record    # Environment variables to pass (default: {})
     --cwd: string         # Working directory for execution
     --timeout: duration   # Fails if execution exceeds this limit (default: 10sec)
 ]
@@ -85,7 +85,7 @@ omitted columns fall back to defaults.
 | `name` | `string` | **Required** | Identifier for the test. |
 | `args` | `list<string>`| `[]` | Arguments to pass to the binary. |
 | `stdin` | `string` | `null` | Data to pipe into the command. |
-| `env` | `record` | `{}` | Row-specific environment variables. *Overrides global `--env`.* |
+| `env-vars` | `record` | `{}` | Row-specific environment variables. *Overrides global `--env-vars`.* |
 | `code` | `int` | `0` | Expected exit code. |
 | `stdout` | `string` | `null` | Expected standard output. |
 | `stderr` | `string` | `null` | Expected standard error. |
@@ -102,7 +102,7 @@ closures.
 def run-table [
     binary: string
     --cwd: string
-    --env-vars: record         # Global env variables, overridden by row-specific `env` column
+    --env-vars: record         # Global env variables, overridden by row-specific `env-vars` column
     --matcher: string          # Global default matcher
     --suite-setup: closure     # Runs ONCE before table. Returns $suite_state
     --suite-teardown: closure  # Runs ONCE after table. Takes $suite_state
@@ -230,7 +230,7 @@ a unified `list<record>`. This data is designed to be piped directly into
     context: {
         binary: "./target/debug/crust",
         args: ["/tmp/tmp.12345"],
-        env: {},
+        env-vars: {},
         cwd: "/home/user/projects",
         stdin: null
     },
