@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.3.0](https://github.com/hafihaf123/nu_testing/compare/ae3d5d452571caa5cac8d8dfb6fd393aca6960ae..v0.3.0) - 2026-06-23
+#### Features
+- add assert module and reflect the API changes in documentation - ([a370d2d](https://github.com/hafihaf123/nu_testing/commit/a370d2df0a4bf50ac8ce67eb69a5711f561a6904)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Documentation
+- update the run-cmd signature documentation in the API docs - ([ae3d5d4](https://github.com/hafihaf123/nu_testing/commit/ae3d5d452571caa5cac8d8dfb6fd393aca6960ae)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.2.0](https://github.com/hafihaf123/nu_testing/compare/64d1c6c45fe5afa399354f12c64a63e09ee276f6..v0.2.0) - 2026-06-23
 #### Features
 - add run_cmd module with the run-cmd command for running external commands while capturing their outputs - ([0ce1e85](https://github.com/hafihaf123/nu_testing/commit/0ce1e85248e417f6dbf2d567f8b9521d510f0856)) - [@hafihaf123](https://github.com/hafihaf123)
