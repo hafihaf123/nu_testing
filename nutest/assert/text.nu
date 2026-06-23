@@ -14,37 +14,37 @@ def "matcher match" [expected: string]: string -> bool {
 }
 
 export def "stdout exact" [expected: string, --not] {
-    run-assert --not=$not $expected {|$ex: string|
+    run-assert --not=$not {|$ex: string|
         $in.output.stdout | matcher exact $ex
-    } "stdout exact"
+    } "stdout exact" $expected
 }
 
 export def "stdout contains" [expected: string, --ignore-case(-i), --not] {
-    run-assert --not=$not $expected {|ex: string|
+    run-assert --not=$not {|ex: string|
         $in.output.stdout | matcher contains --ignore-case=$ignore_case $ex
-    } "stdout contains"
+    } "stdout contains" $expected
 }
 
 export def "stdout match" [expected: string, --not] {
-    run-assert --not=$not $expected {|$ex: string|
+    run-assert --not=$not {|$ex: string|
         $in.output.stdout | matcher match $ex
-    } "stdout match"
+    } "stdout match" $expected
 }
 
 export def "stderr exact" [expected: string, --not] {
-    run-assert --not=$not $expected {|$ex: string|
+    run-assert --not=$not {|$ex: string|
         $in.output.stderr | matcher exact $ex
-    } "stderr exact"
+    } "stderr exact" $expected
 }
 
 export def "stderr contains" [expected: string, --ignore-case(-i), --not] {
-    run-assert --not=$not $expected {|ex: string|
+    run-assert --not=$not {|ex: string|
         $in.output.stderr | matcher contains --ignore-case=$ignore_case $ex
-    } "stderr contains"
+    } "stderr contains" $expected
 }
 
 export def "stderr match" [expected: string, --not] {
-    run-assert --not=$not $expected {|$ex: string|
+    run-assert --not=$not {|$ex: string|
         $in.output.stderr | matcher match $ex
-    } "stderr match"
+    } "stderr match" $expected
 }

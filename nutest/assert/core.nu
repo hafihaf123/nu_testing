@@ -1,9 +1,9 @@
 use ../schema.nu
 
 export def run-assert [
-    expected
     compare: closure
     matcher: string
+    expected?
     --not
 ]: record -> record {
     let schema = $in

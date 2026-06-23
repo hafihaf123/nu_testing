@@ -2,9 +2,9 @@ use ../schema.nu
 use core.nu run-assert
 
 export def code [expected_code: int, --not]: record -> record {
-    run-assert --not=$not $expected_code {|ex: int|
+    run-assert --not=$not {|ex: int|
         $in.output.exit_code == $ex
-    } "code"
+    } "code" $expected_code
 }
 
 export def timeout []: record -> record {
