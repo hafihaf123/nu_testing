@@ -17,7 +17,7 @@ export def test-metadata [
 export def context [
     binary: string
     cwd: string
-    stdin: string
+    --stdin: string
     --args: list<string>
     --env-vars: record
 ]: nothing -> record, record -> record {
@@ -50,7 +50,14 @@ export def assertion [matcher: string, expected, passed: bool]: record -> record
 }
 
 export def status [status: string]: record -> record {
-    const allowed_statuses = ["PASS", "FAIL", "SETUP_PANIC", "TEARDOWN_PANIC", "SKIP"]
+    const allowed_statuses = [
+        "PASS"
+        "FAIL"
+        "SETUP_PANIC"
+        "TEARDOWN_PANIC"
+        "SKIP"
+        "TIMEOUT"
+    ]
 
     if $status not-in $allowed_statuses {
         error make {

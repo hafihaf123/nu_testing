@@ -210,7 +210,7 @@ a unified `list<record>`. This data is designed to be piped directly into
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `metadata` | `record` | High-level tracking injected by the runner. |
-| `status` | `string` | `"PASS"`, `"FAIL"`, `"SETUP_PANIC"`, `"TEARDOWN_PANIC"`, or `"SKIP"`. |
+| `status` | `string` | `"PASS"`, `"FAIL"`, `"SETUP_PANIC"`, `"TEARDOWN_PANIC"`, `"TIMEOUT"`, or `"SKIP"`. |
 | `context` | `record` | Everything needed to perfectly reproduce the execution. |
 | `output` | `record` | The raw, untouched result of the binary execution. |
 | `assertions` | `list<record>`| A chronological list of the pipeline filters evaluated. |
