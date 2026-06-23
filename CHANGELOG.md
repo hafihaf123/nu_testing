@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.2.0](https://github.com/hafihaf123/nu_testing/compare/64d1c6c45fe5afa399354f12c64a63e09ee276f6..v0.2.0) - 2026-06-23
+#### Features
+- add run_cmd module with the run-cmd command for running external commands while capturing their outputs - ([0ce1e85](https://github.com/hafihaf123/nu_testing/commit/0ce1e85248e417f6dbf2d567f8b9521d510f0856)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Bug Fixes
+- add TIMEOUT to allowed statuses for the output schema - ([64d1c6c](https://github.com/hafihaf123/nu_testing/commit/64d1c6c45fe5afa399354f12c64a63e09ee276f6)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.1.0](https://github.com/hafihaf123/nu_testing/compare/54b18c9ad056dadd6e5ecdc2c1116ad1828fe9f3..v0.1.0) - 2026-06-21
 #### Features
 - add schema module for helper commands for creating the test output record - ([a1cb6f0](https://github.com/hafihaf123/nu_testing/commit/a1cb6f0141c731f42bbe88ce3832b8b69e513557)) - [@hafihaf123](https://github.com/hafihaf123)
