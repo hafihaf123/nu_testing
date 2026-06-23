@@ -1,7 +1,7 @@
 use schema.nu
 
 export def run-cmd [
-    binary: path          # Path to the executable
+    binary: string        # Name/path of the executable
     args?: list<string>   # Optional positional arguments (default: [])
     --env-vars: record    # Environment variables to pass (default: {})
     --cwd: directory      # Working directory for execution

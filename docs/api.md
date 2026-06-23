@@ -28,10 +28,10 @@ an internal Nushell record.
 
 ```nu
 def run-cmd [
-    binary: string        # Path to the executable
+    binary: string        # Name/path of the executable
     args?: list<string>   # Optional positional arguments (default: [])
     --env-vars: record    # Environment variables to pass (default: {})
-    --cwd: string         # Working directory for execution
+    --cwd: directory      # Working directory for execution
     --timeout: duration   # Fails if execution exceeds this limit (default: 10sec)
 ]
 ```
