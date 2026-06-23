@@ -38,17 +38,26 @@ def run-cmd [
 
 ### `assert` (Pipeline Filters)
 
-Evaluates the output of `run-cmd`. If the assertion passes, it returns the record
-unmodified, allowing infinite chaining. If it fails, it halts the pipeline and records
-the error.
+Evaluates the output of `run-cmd`. Appends a new `assertions` entry with the results
+of the assertion to the output and propagates it further, allowing for potentially
+infinite chaining. You can use either a generic `assert [name: string, expected,
+compare: closure]`, where the `compare` closure takes the current output as input
+and the expected value as the only argument. The easier way to use assertions is
+through the built-in `assert` subcommands. Most of these subcommands also support
+a `--not` flag to invert the check (you can always check if the concrete subcommand
+contains the flag using the `--help` flag).
+
+> [!Note]
+> To be able to use the generic `assert` function, you need to be aware of the
+> Nutest output schema: [Fat Schema](#the-output-schema-fat-schema)
 
 **Available Subcommands:**
 
 * `assert code [expected: int]`
+* `assert timeout`
 * `assert stdout exact [expected: string]`
 * `assert stdout contains [expected: string]`
 * `assert stdout match [regex: string]`
-* `assert stdout empty`
 * *(Equivalent filters exist for `stderr`)*
 
 **Example Pipeline:**
