@@ -40,12 +40,10 @@ def run-cmd [
 
 Evaluates the output of `run-cmd`. Appends a new `assertions` entry with the results
 of the assertion to the output and propagates it further, allowing for potentially
-infinite chaining. You can use either a generic `assert [name: string, expected,
-compare: closure]`, where the `compare` closure takes the current output as input
-and the expected value as the only argument. The easier way to use assertions is
-through the built-in `assert` subcommands. Most of these subcommands also support
-a `--not` flag to invert the check (you can always check if the concrete subcommand
-contains the flag using the `--help` flag).
+infinite chaining. The easiest way to use assertions is through the built-in `assert`
+subcommands. Most of these subcommands also support a `--not` flag to invert the
+check (you can always check if the concrete subcommand contains the flag using the
+`--help` flag).
 
 > [!Note]
 > To be able to use the generic `assert` function, you need to be aware of the
@@ -68,14 +66,20 @@ run-cmd "./my_app" ["--version"] | assert code 0 | assert stdout contains "v1.0"
 
 #### Custom Assertions
 
-Because the pipeline just passes Nushell records, you can write custom assertions
-by reading `$in`:
+You can also use a generic `assert [name: string, expected, compare: closure]`,
+where the `compare` closure takes the current output as input and the expected value
+as the only argument.
+
+**Examples**:
 
 ```nu
-def "assert valid-json" [] {
-    let res = $in
-    try { $res.output.stdout | from json } catch { error make { msg: "Invalid JSON" } }
-    $res
+run-cmd command | assert "valid json" {
+    try {$in.output.stdout | from json; true} catch {false}
+}
+
+# a manual reimplementation of the `assert stdout exact` command
+def "my-assert" [expected: string] {
+    assert "stdout exact" {|ex| $in.output.stdout == $ex} $expected
 }
 ```
 
