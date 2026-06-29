@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.4.0](https://github.com/hafihaf123/nu_testing/compare/8e88df867dd164102f59b12c26ccbcfd184a465a..v0.4.0) - 2026-06-29
+#### Features
+- add run_test module with the run-test helper that encapsulates running a test from a closure - ([8e88df8](https://github.com/hafihaf123/nu_testing/commit/8e88df867dd164102f59b12c26ccbcfd184a465a)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.3.0](https://github.com/hafihaf123/nu_testing/compare/ae3d5d452571caa5cac8d8dfb6fd393aca6960ae..v0.3.0) - 2026-06-23
 #### Features
 - add assert module and reflect the API changes in documentation - ([a370d2d](https://github.com/hafihaf123/nu_testing/commit/a370d2df0a4bf50ac8ce67eb69a5711f561a6904)) - [@hafihaf123](https://github.com/hafihaf123)
