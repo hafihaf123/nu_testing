@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.4.1](https://github.com/hafihaf123/nu_testing/compare/74c5ef51baa37a662977d28d820ecf6576fb9078..v0.4.1) - 2026-06-29
+#### Bug Fixes
+- (**assert**) make the 'expected' argument to assert optional - ([74c5ef5](https://github.com/hafihaf123/nu_testing/commit/74c5ef51baa37a662977d28d820ecf6576fb9078)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Documentation
+- update API documentation for custom assertions - ([4baaa67](https://github.com/hafihaf123/nu_testing/commit/4baaa6729a5d7f35f718183b208b6a0eb0a0f172)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.4.0](https://github.com/hafihaf123/nu_testing/compare/8e88df867dd164102f59b12c26ccbcfd184a465a..v0.4.0) - 2026-06-29
 #### Features
 - add run_test module with the run-test helper that encapsulates running a test from a closure - ([8e88df8](https://github.com/hafihaf123/nu_testing/commit/8e88df867dd164102f59b12c26ccbcfd184a465a)) - [@hafihaf123](https://github.com/hafihaf123)
