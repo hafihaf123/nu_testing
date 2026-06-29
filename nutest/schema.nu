@@ -8,7 +8,7 @@ export def test-metadata [
     $in | upsert metadata {
         name: $name
         suite: $suite
-        file: ($file | path expand)
+        file: ($file | if ($in == null) {null} else {path expand})
         timestamp: $timestamp
         duration: $duration
     }
@@ -53,6 +53,7 @@ export def status [status: string]: record -> record {
     const allowed_statuses = [
         "PASS"
         "FAIL"
+        "PANIC"
         "SETUP_PANIC"
         "TEARDOWN_PANIC"
         "SKIP"
