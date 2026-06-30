@@ -13,7 +13,7 @@ export def run-cmd [
     let env_vars = $env_vars | default {}
     let args = $args | default []
 
-    let context = schema context $binary $cwd --stdin $stdin --args $args --env-vars $env_vars
+    let context = schema context $binary --cwd $cwd --stdin $stdin --args $args --env-vars $env_vars
 
     let timeout_sec: int = $timeout / 1sec
 

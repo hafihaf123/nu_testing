@@ -16,11 +16,12 @@ export def test-metadata [
 
 export def context [
     binary: string
-    cwd: string
+    --cwd: directory
     --stdin: string
     --args: list<string>
     --env-vars: record
 ]: nothing -> record, record -> record {
+    let cwd = $cwd | default "." | path expand
     let clean_envs = (
         $env_vars
         | default {}
