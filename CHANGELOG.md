@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.4.2](https://github.com/hafihaf123/nu_testing/compare/6a3cabc7b08fd112fa7bd6fc0a4e2b1170cfcc66..v0.4.2) - 2026-06-30
+#### Bug Fixes
+- (**run_test**) add setup and teardown support with correct state sharing and fix some bugs - ([6a3cabc](https://github.com/hafihaf123/nu_testing/commit/6a3cabc7b08fd112fa7bd6fc0a4e2b1170cfcc66)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.4.1](https://github.com/hafihaf123/nu_testing/compare/74c5ef51baa37a662977d28d820ecf6576fb9078..v0.4.1) - 2026-06-29
 #### Bug Fixes
 - (**assert**) make the 'expected' argument to assert optional - ([74c5ef5](https://github.com/hafihaf123/nu_testing/commit/74c5ef51baa37a662977d28d820ecf6576fb9078)) - [@hafihaf123](https://github.com/hafihaf123)
