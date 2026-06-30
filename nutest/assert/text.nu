@@ -1,17 +1,6 @@
 use ../schema.nu
 use core.nu run-assert
-
-def "matcher exact" [expected: string]: string -> bool {
-    $in == $expected
-}
-
-def "matcher contains" [expected: string, --ignore-case(-i)]: string -> bool {
-    $in | str contains --ignore-case=$ignore_case $expected
-}
-
-def "matcher match" [expected: string]: string -> bool {
-    $in =~ $expected
-}
+use matcher.nu
 
 export def "stdout exact" [expected: string, --not] {
     run-assert --not=$not {|$ex: string|
