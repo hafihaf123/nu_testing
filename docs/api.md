@@ -98,8 +98,8 @@ omitted columns fall back to defaults.
 | `name` | `string` | **Required** | Identifier for the test. |
 | `args` | `list<string>`| `[]` | Arguments to pass to the binary. |
 | `stdin` | `string` | `null` | Data to pipe into the command. |
-| `env-vars` | `record` | `{}` | Row-specific environment variables. *Overrides global `--env-vars`.* |
-| `code` | `int` | `0` | Expected exit code. |
+| `env_vars` | `record` | `{}` | Row-specific environment variables. *Overrides global `--env-vars`.* |
+| `code` | `int` | `null` | Expected exit code. |
 | `stdout` | `string` | `null` | Expected standard output. |
 | `stderr` | `string` | `null` | Expected standard error. |
 | `matcher` | `string` | `"exact"` | Comparison method (`"exact"`, `"contains"`, `"regex"`). *Overrides global `--matcher`.* |
@@ -113,6 +113,7 @@ closures.
 
 ```nu
 def run-table [
+    suite: string              # Name of the suite of tests created from the table
     binary: string
     --cwd: string
     --env-vars: record         # Global env variables, overridden by row-specific `env-vars` column
