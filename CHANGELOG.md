@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.5.0](https://github.com/hafihaf123/nu_testing/compare/cbe6263a7d3c7de0ba0737b15138970856f22577..v0.5.0) - 2026-06-30
+#### Features
+- implement the run-table command - ([4c12ff9](https://github.com/hafihaf123/nu_testing/commit/4c12ff9dde8948a3337b0b864407ca33171ca6aa)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Refactoring
+- (**assert**) extract matchers to a separate module to allow reuse - ([cbe6263](https://github.com/hafihaf123/nu_testing/commit/cbe6263a7d3c7de0ba0737b15138970856f22577)) - [@hafihaf123](https://github.com/hafihaf123)
+- (**schema**) make cwd a flag parameter with a default to . and path expansion for schema context - ([55e79a9](https://github.com/hafihaf123/nu_testing/commit/55e79a93ebe3c1fab525176f0f1d6568e4bf670d)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.4.2](https://github.com/hafihaf123/nu_testing/compare/6a3cabc7b08fd112fa7bd6fc0a4e2b1170cfcc66..v0.4.2) - 2026-06-30
 #### Bug Fixes
 - (**run_test**) add setup and teardown support with correct state sharing and fix some bugs - ([6a3cabc](https://github.com/hafihaf123/nu_testing/commit/6a3cabc7b08fd112fa7bd6fc0a4e2b1170cfcc66)) - [@hafihaf123](https://github.com/hafihaf123)
