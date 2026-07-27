@@ -17,7 +17,7 @@ export def run-test [
         return (
             {}
             | schema status "SETUP_PANIC"
-            | schema test-metadata $name (date now) 0ms
+            | schema test-metadata $name (date now) 0ms --file $file --suite $suite
         )
     }
 
@@ -25,7 +25,11 @@ export def run-test [
     let schema: record = try {
         do $test $test_state
     } catch {
-        return ({} | schema status "PANIC" | schema test-metadata $name (date now) 0ms)
+        return (
+            {}
+            | schema status "PANIC"
+            | schema test-metadata $name (date now) 0ms --file $file --suite $suite
+        )
     }
     let duration = (date now) - $timestamp
 
@@ -37,7 +41,7 @@ export def run-test [
         return (
             $schema
             | schema status "TEARDOWN_PANIC"
-            | schema test-metadata $name (date now) 0ms
+            | schema test-metadata $name (date now) 0ms --file $file --suite $suite
         )
     }
 
