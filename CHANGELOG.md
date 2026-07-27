@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.6.1](https://github.com/hafihaf123/nu_testing/compare/a355ec0951f5c44b7e122f40e1c139c337a971ee..v0.6.1) - 2026-07-27
+#### Bug Fixes
+- (**run_suite**) fix bugs with missing tags, enhance error reporting on duplicate tags - ([a355ec0](https://github.com/hafihaf123/nu_testing/commit/a355ec0951f5c44b7e122f40e1c139c337a971ee)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.6.0](https://github.com/hafihaf123/nu_testing/compare/01c9dde4a00d3e6b48528d152112b09eeb32e99e..v0.6.0) - 2026-07-27
 #### Features
 - add run-suite API implementation - ([849dbbf](https://github.com/hafihaf123/nu_testing/commit/849dbbfeded5c12ce08c7b3f32e22bb89cb2c8a0)) - [@hafihaf123](https://github.com/hafihaf123)
