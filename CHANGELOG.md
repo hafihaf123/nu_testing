@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.6.0](https://github.com/hafihaf123/nu_testing/compare/01c9dde4a00d3e6b48528d152112b09eeb32e99e..v0.6.0) - 2026-07-27
+#### Features
+- add run-suite API implementation - ([849dbbf](https://github.com/hafihaf123/nu_testing/commit/849dbbfeded5c12ce08c7b3f32e22bb89cb2c8a0)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Bug Fixes
+- (**run_test**) add file and suite fields to the PANIC early exit options' schema - ([01c9dde](https://github.com/hafihaf123/nu_testing/commit/01c9dde4a00d3e6b48528d152112b09eeb32e99e)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Documentation
+- add suite API example - ([668de68](https://github.com/hafihaf123/nu_testing/commit/668de68121ed04b2ae9fff050f9aa997bd18714d)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.5.0](https://github.com/hafihaf123/nu_testing/compare/cbe6263a7d3c7de0ba0737b15138970856f22577..v0.5.0) - 2026-06-30
 #### Features
 - implement the run-table command - ([4c12ff9](https://github.com/hafihaf123/nu_testing/commit/4c12ff9dde8948a3337b0b864407ca33171ca6aa)) - [@hafihaf123](https://github.com/hafihaf123)
