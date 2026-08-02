@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.7.0](https://github.com/hafihaf123/nu_testing/compare/1a150565879f603b9035b82349cad47d0039e1fd..v0.7.0) - 2026-08-02
+#### Features
+- add basic and summary viewers to tooling - ([1a15056](https://github.com/hafihaf123/nu_testing/commit/1a150565879f603b9035b82349cad47d0039e1fd)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.6.1](https://github.com/hafihaf123/nu_testing/compare/a355ec0951f5c44b7e122f40e1c139c337a971ee..v0.6.1) - 2026-07-27
 #### Bug Fixes
 - (**run_suite**) fix bugs with missing tags, enhance error reporting on duplicate tags - ([a355ec0](https://github.com/hafihaf123/nu_testing/commit/a355ec0951f5c44b7e122f40e1c139c337a971ee)) - [@hafihaf123](https://github.com/hafihaf123)
