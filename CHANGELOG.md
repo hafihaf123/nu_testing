@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.8.0](https://github.com/hafihaf123/nu_testing/compare/86adf686c8b9dc7f05000d24a23b30ee07fbb029..v0.8.0) - 2026-08-03
+#### Features
+- add diff view to tooling - ([0607e59](https://github.com/hafihaf123/nu_testing/commit/0607e59471a7ac2438b5a1d5476f8fffd3dc302a)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Documentation
+- (**tooling**) refine tooling docs for more feasible ideas - ([86adf68](https://github.com/hafihaf123/nu_testing/commit/86adf686c8b9dc7f05000d24a23b30ee07fbb029)) - [@hafihaf123](https://github.com/hafihaf123)
+- update suite example file to include a failing test - ([1a783f7](https://github.com/hafihaf123/nu_testing/commit/1a783f77511014bb55c7615ae2c7e0dcf630bc70)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.7.0](https://github.com/hafihaf123/nu_testing/compare/1a150565879f603b9035b82349cad47d0039e1fd..v0.7.0) - 2026-08-02
 #### Features
 - add basic and summary viewers to tooling - ([1a15056](https://github.com/hafihaf123/nu_testing/commit/1a150565879f603b9035b82349cad47d0039e1fd)) - [@hafihaf123](https://github.com/hafihaf123)
