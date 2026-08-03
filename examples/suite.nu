@@ -37,3 +37,9 @@ export def "test 1" [] {
 export def "test 2" [] {
     nutest run-cmd "false" | nutest assert code --not 0
 }
+
+# @test
+export def "failing test" [] {
+    nutest run-cmd "echo" ["something\nmulti\nline"]
+    | nutest assert stdout exact "something\nmultii\nline\n"
+}
