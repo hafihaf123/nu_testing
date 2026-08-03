@@ -2,7 +2,7 @@
 
 The testing framework is built entirely on the philosophy of **Data-Driven Pipelines**.
 Unlike traditional testing frameworks that immediately print colored text to your
-terminal, the core execution engines (`suite` and `run-table`) output raw, structured
+terminal, the core execution engines (`run-suite` and `run-table`) output raw, structured
 Nushell data (a list of records).
 
 To interact with this data, you use the framework's tooling commands. These tools
@@ -18,7 +18,7 @@ Before using the tools, it is important to understand what they consume. Every
 test run produces a stream of records containing the complete context of the test.
 
 ```nu
-# A simplified look at what `run-table` or `suite` actually outputs
+# A simplified look at what `run-table` or `run-suite` actually outputs
 [
   {
     metadata: { name: "missing semicolon", file: "tests.nu", ... },
@@ -92,11 +92,6 @@ update test scripts, or manage execution state.
   shell one-liner. This command perfectly reconstructs the `cwd`, environment variables,
   arguments, and `stdin` so you can copy-paste it directly into a debugger like
   `gdb` or `lldb`.
-* `nutest dev snapshot`: An automation tool for the Data-Table API. If your binary's
-  output changes intentionally, this tool reads the fresh `raw_output` and automatically
-  rewrites your `.nu` test scripts to update the expected values.
-* `nutest dev watch`: A wrapper that monitors your project directory for file changes,
-  automatically clearing the terminal and rerunning the test pipeline upon saving.
 
 **Workflow Example:**
 
@@ -110,23 +105,38 @@ $results
 # Expected Output: RUST_BACKTRACE=1 ./target/debug/crust main.cr
 ```
 
-## 4. Selectors (`nutest select`)
+## 4. Filters (`nutest filter`)
 
-**Purpose:** To filter the test matrix *before* execution to save time.
+**Purpose:** To query, isolate, and extract specific insights from the generated
+test data using framework-aware semantic commands.
 
-When working on a massive codebase, running the entire suite can be slow. Selectors
-help you narrow down the execution context interactively.
+While Nushell's native `where` command is incredibly powerful, `nutest filter` provides
+ergonomic shortcuts designed specifically for the Fat Schema. When you have hundreds
+of test results, these filters help you instantly narrow down the context before
+piping the data into a Viewer, Exporter, or Developer Utility.
 
-* `nutest select interactive`: Reads your `tests.nu` script, parses all available
-  test names and suites, and opens an interactive terminal UI (TUI). You use the
-  arrow keys and spacebar to select exactly which tests to run. The selected subset
-  is then passed into the execution engine.
+* `nutest filter failures`: Quickly extracts only the tests that did not pass
+  (e.g., status of `"FAIL"`, `"TIMEOUT"`, `"SETUP_PANIC"`, or `"TEARDOWN_PANIC"`).
+* `nutest filter slow --threshold <duration>`: Isolates tests that took longer than
+  the specified duration. This is invaluable for profiling your binary and identifying
+  performance regressions in your code.
+* `nutest filter timeouts`: Extracts tests that specifically hit the execution time
+  limit, helping you easily identify infinite loops, blocked threads, or deadlocks
+  in the tested program.
 
 **Workflow Example:**
 
 ```nu
-# Interactively choose tests, run them, and print the summary
-nutest select interactive tests.nu
-| run-suite "My App"
+# Run the test matrix, isolate only the tests that took longer than 500ms,
+# and view their summary to investigate performance bottlenecks
+run-table $compiler_tests "./crust"
+| nutest filter slow --threshold 500ms
 | nutest view summary
+
+# Find a test that timed out and immediately generate a reproduction 
+# command so you can run it manually in a debugger
+$results
+| nutest filter timeouts
+| first
+| nutest dev repro
 ```
