@@ -45,11 +45,13 @@ export def run-test [
         )
     }
 
-    let status: string = if $schema has assertions and ($schema | get assertions | any {not $in.passed}) {
-        "FAIL"
-    } else {
-        "PASS"
-    }
+    let status: string = $schema.status? | default (
+        if $schema has assertions and ($schema | get assertions | any {not $in.passed}) {
+            "FAIL"
+        } else {
+            "PASS"
+        }
+    )
 
     $schema
     | schema status $status
