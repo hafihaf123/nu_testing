@@ -119,7 +119,7 @@ piping the data into a Viewer, Exporter, or Developer Utility.
   (e.g., status of `"FAIL"`, `"TIMEOUT"`, `"SETUP_PANIC"`, or `"TEARDOWN_PANIC"`).
 * `nutest filter slow --threshold <duration>`: Isolates tests that took longer than
   the specified duration. This is invaluable for profiling your binary and identifying
-  performance regressions in your code.
+  performance regressions in your code. Default threshold is 5 seconds.
 * `nutest filter timeouts`: Extracts tests that specifically hit the execution time
   limit, helping you easily identify infinite loops, blocked threads, or deadlocks
   in the tested program.
