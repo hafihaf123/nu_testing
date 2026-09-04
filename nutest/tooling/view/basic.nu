@@ -8,14 +8,16 @@ export def main []: table -> record {
             "PASS" => (ansi green)
             "FAIL" => (ansi red)
             "SKIP" => (ansi yellow)
-            _ => (ansi purple)
+            "TIMEOUT" => (ansi purple)
+            _ => (ansi red_reverse)
         }
 
         let icon = match $test.status {
             "PASS" => "✔"
             "FAIL" => "✖"
             "SKIP" => "⏸"
-            _ => "⚠"
+            "TIMEOUT" => "⏱"
+            _ => "(!)"
         }
 
         print $"($status_color)($icon)(ansi reset)  ($test.metadata.suite) |  ($test.metadata.name)"
