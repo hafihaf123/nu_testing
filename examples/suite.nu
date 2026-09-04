@@ -43,3 +43,8 @@ export def "failing test" [] {
     nutest run-cmd "echo" ["something\nmulti\nline"]
     | nutest assert stdout exact "something\nmultii\nline\n"
 }
+
+# @test
+export def "timeout test" [] {
+    nutest run-cmd "sleep" ["60"] --timeout 2sec | nutest assert code 0
+}
