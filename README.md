@@ -26,7 +26,7 @@ To use `nutest` in your project, simply clone the repository and `use` the modul
 in your scripts:
 
 ```nu
-use path/to/nutest *
+use path/to/nutest
 ```
 
 ### Pillar 1: The Matrix API (`run-table`)
