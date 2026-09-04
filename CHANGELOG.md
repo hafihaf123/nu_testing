@@ -2,6 +2,21 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.9.0](https://github.com/hafihaf123/nu_testing/compare/18cd841d5e0185ad0bd3d3491aa70d3469acba98..v0.9.0) - 2026-09-04
+#### Features
+- add `nutest filter slow` tool - ([db1b2e2](https://github.com/hafihaf123/nu_testing/commit/db1b2e2fb6f23f26976f0532dd38f6ffc0a35e29)) - [@hafihaf123](https://github.com/hafihaf123)
+- add `nutest filter timeuts` tool - ([906f5b9](https://github.com/hafihaf123/nu_testing/commit/906f5b90df9569d86fd0fa3aecee91268d0a36f8)) - [@hafihaf123](https://github.com/hafihaf123)
+- add `nutest filter failures` tool - ([18cd841](https://github.com/hafihaf123/nu_testing/commit/18cd841d5e0185ad0bd3d3491aa70d3469acba98)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Bug Fixes
+- add timeouts to `nutest view summary` and `nutest view basic` - ([35dbf52](https://github.com/hafihaf123/nu_testing/commit/35dbf52585fd7f00bf195ab22b7287e4a0a309e4)) - [@hafihaf123](https://github.com/hafihaf123)
+- retain TIMEOUT status during run-test - ([1f38bf2](https://github.com/hafihaf123/nu_testing/commit/1f38bf2dfc726b538e1bd9aa6deec23a33a1876a)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Documentation
+- (**README**) fix use nutest command example - ([5980a07](https://github.com/hafihaf123/nu_testing/commit/5980a07b851b1475bf18f3f988473786a007b4d3)) - [@hafihaf123](https://github.com/hafihaf123)
+- (**tooling**) specify default `nutest filter slow` threshold - ([105b3ef](https://github.com/hafihaf123/nu_testing/commit/105b3efaca8986e2e8e8919d0cee47a117de8ccb)) - [@hafihaf123](https://github.com/hafihaf123)
+- add a timeut test to suite example script - ([9d013ec](https://github.com/hafihaf123/nu_testing/commit/9d013ec78f5bb4806cd49288e91ceef0f3352fc8)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.8.0](https://github.com/hafihaf123/nu_testing/compare/86adf686c8b9dc7f05000d24a23b30ee07fbb029..v0.8.0) - 2026-08-03
 #### Features
 - add diff view to tooling - ([0607e59](https://github.com/hafihaf123/nu_testing/commit/0607e59471a7ac2438b5a1d5476f8fffd3dc302a)) - [@hafihaf123](https://github.com/hafihaf123)
