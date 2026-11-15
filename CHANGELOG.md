@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [v0.9.1](https://github.com/hafihaf123/nu_testing/compare/07e98c57ca3961e77997bfca838eb898b706bb0a..v0.9.1) - 2026-11-15
+#### Bug Fixes
+- (**assert**) rename match command to matches to avoid collision with the match keyword - ([a62ed32](https://github.com/hafihaf123/nu_testing/commit/a62ed32979d2211ebb986c4c220a1a3aa5354de2)) - [@hafihaf123](https://github.com/hafihaf123)
+#### Documentation
+- add Matrix API example script - ([07e98c5](https://github.com/hafihaf123/nu_testing/commit/07e98c57ca3961e77997bfca838eb898b706bb0a)) - [@hafihaf123](https://github.com/hafihaf123)
+
+- - -
+
 ## [v0.9.0](https://github.com/hafihaf123/nu_testing/compare/18cd841d5e0185ad0bd3d3491aa70d3469acba98..v0.9.0) - 2026-09-04
 #### Features
 - add `nutest filter slow` tool - ([db1b2e2](https://github.com/hafihaf123/nu_testing/commit/db1b2e2fb6f23f26976f0532dd38f6ffc0a35e29)) - [@hafihaf123](https://github.com/hafihaf123)
