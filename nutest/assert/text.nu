@@ -16,7 +16,7 @@ export def "stdout contains" [expected: string, --ignore-case(-i), --not] {
 
 export def "stdout match" [expected: string, --not] {
     run-assert --not=$not {|$ex: string|
-        $in.output.stdout | matcher match $ex
+        $in.output.stdout | matcher matches $ex
     } "stdout match" $expected
 }
 
@@ -34,6 +34,6 @@ export def "stderr contains" [expected: string, --ignore-case(-i), --not] {
 
 export def "stderr match" [expected: string, --not] {
     run-assert --not=$not {|$ex: string|
-        $in.output.stderr | matcher match $ex
+        $in.output.stderr | matcher matches $ex
     } "stderr match" $expected
 }
